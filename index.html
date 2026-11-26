@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Materi & Kuis IPS - Perubahan Sosial</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+      --secondary: #0f172a;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --bg-body: #f1f5f9;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --radius: 14px;
+      --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #ffffff;
+      padding: 2rem 1rem 3.5rem;
+      text-align: center;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.75rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Container & Navigation Tabs */
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: -2rem auto 3rem;
+      padding: 0 1rem;
+      flex: 1;
+    }
+
+    .nav-tabs {
+      display: flex;
+      background: var(--bg-card);
+      padding: 0.4rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+      gap: 0.4rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .tab-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Sections */
+    .section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Materi Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+    }
+
+    .card h2 {
+      color: var(--primary-dark);
+      font-size: 1.3rem;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      color: var(--secondary);
+      margin: 1rem 0 0.4rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .info-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .info-box strong {
+      display: block;
+      color: var(--primary-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    ul.materi-list {
+      padding-left: 1.25rem;
+      color: var(--text-main);
+    }
+
+    ul.materi-list li {
+      margin-bottom: 0.45rem;
+    }
+
+    /* Quiz Styling */
+    .quiz-start {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .quiz-start h2 {
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+
+    .input-group {
+      max-width: 380px;
+      margin: 1.5rem auto;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary);
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: 0.85rem;
+      margin-top: 0.4rem;
+      display: none;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-light);
+    }
+
+    /* Quiz Active */
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .pill {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 10px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.35s ease;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      color: var(--secondary);
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      width: 100%;
+      text-align: left;
+      padding: 1rem 1.15rem;
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 1rem;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-letter {
+      min-width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--bg-body);
+      color: var(--text-main);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .option-btn.correct {
+      border-color: var(--success);
+      background: var(--success-bg);
+    }
+
+    .option-btn.correct .option-letter {
+      background: var(--success);
+      color: #ffffff;
+    }
+
+    .option-btn.wrong {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    .option-btn.wrong .option-letter {
+      background: var(--danger);
+      color: #ffffff;
+    }
+
+    .feedback-box {
+      margin-top: 1.25rem;
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      display: none;
+      font-size: 0.95rem;
+    }
+
+    .feedback-box.correct {
+      display: block;
+      background: var(--success-bg);
+      border-left: 4px solid var(--success);
+      color: #14532d;
+    }
+
+    .feedback-box.wrong {
+      display: block;
+      background: var(--danger-bg);
+      border-left: 4px solid var(--danger);
+      color: #7f1d1d;
+    }
+
+    .quiz-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Result Screen */
+    .result-header {
+      text-align: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 6px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem auto;
+    }
+
+    .score-circle span {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      line-height: 1;
+    }
+
+    .score-circle small {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1rem 0;
+      font-weight: 600;
+    }
+
+    .stat-correct { color: var(--success); }
+    .stat-wrong { color: var(--danger); }
+
+    .review-item {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 0.85rem;
+      background: #fafafa;
+    }
+
+    .review-item h4 {
+      font-size: 0.98rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .review-item p {
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.55rem; }
+      .card { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="badge">ILMU PENGETAHUAN SOSIAL (IPS)</span>
+    <h1>Perubahan Sosial Budaya</h1>
+    <p>Pelajari ringkasan konsep perubahan sosial dan uji pemahamanmu melalui kuis interaktif.</p>
+  </header>
+
+  <main class="container">
+    <!-- Navigasi Tab -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('materi', this)">📚 Ringkasan Materi</button>
+      <button class="tab-btn" onclick="switchTab('kuis', this)">📝 Kuis Interaktif (10 Soal)</button>
+    </div>
+
+    <!-- BAGIAN 1: RINGKASAN MATERI -->
+    <section id="section-materi" class="section active">
+      <div class="card">
+        <h2>1. Pengertian Perubahan Sosial</h2>
+        <p><strong>Perubahan sosial</strong> adalah segala perubahan pada lembaga-lembaga kemasyarakatan di dalam suatu masyarakat yang memengaruhi sistem sosialnya, termasuk nilai-nilai, sikap, dan pola perilaku di antara kelompok-kelompok dalam masyarakat.</p>
+        <div class="grid-2">
+          <div class="info-box">
+            <strong>Selo Soemardjan</strong>
+            Perubahan pada lembaga kemasyarakatan yang memengaruhi sistem sosial, nilai, sikap, dan pola perilaku.
+          </div>
+          <div class="info-box">
+            <strong>Kingsley Davis</strong>
+            Perubahan-perubahan yang terjadi dalam struktur dan fungsi masyarakat (misalnya munculnya organisasi buruh).
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2. Bentuk-Bentuk Perubahan Sosial</h2>
+        <ul class="materi-list">
+          <li><strong>Berdasarkan Waktunya:</strong>
+            <br>• <em>Evolusi (Lambat):</em> Perubahan yang memerlukan waktu lama dengan rentetan perubahan kecil yang saling mengikuti (contoh: perubahan masyarakat tradisional ke modern).
+            <br>• <em>Revolusi (Cepat):</em> Perubahan yang berlangsung cepat dan menyangkut sendi-sendi pokok kehidupan masyarakat (contoh: Revolusi Industri di Inggris).
+          </li>
+          <li><strong>Berdasarkan Pengaruhnya:</strong>
+            <br>• <em>Pengaruh Kecil:</em> Tidak membawa perubahan langsung pada struktur sosial (contoh: perubahan tren gaya rambut atau model pakaian).
+            <br>• <em>Pengaruh Besar:</em> Mengubah struktur sosial, sistem mata pencaharian, dan lembaga masyarakat (contoh: industrialisasi dan digitalisasi ekonomi).
+          </li>
+          <li><strong>Berdasarkan Perencanaannya:</strong>
+            <br>• <em>Direncanakan (Planned Change):</em> Dikehendaki dan direncanakan oleh pihak <em>agent of change</em> (contoh: program pembangunan infrastruktur atau wajib belajar).
+            <br>• <em>Tidak Direncanakan (Unplanned Change):</em> Terjadi di luar jangkauan pengawasan masyarakat (contoh: perubahan sosial akibat bencana alam atau pandemi).
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>3. Faktor Penyebab & Proses Perubahan</h2>
+        <div class="grid-2">
+          <div>
+            <h3>Faktor Internal (Dari Dalam)</h3>
+            <ul class="materi-list">
+              <li>Bertambah atau berkurangnya penduduk.</li>
+              <li><strong>Discovery:</strong> Penemuan unsur kebudayaan baru (ide/alat).</li>
+              <li><strong>Invention:</strong> Pengembangan dari <em>discovery</em> hingga diakui dan diterapkan masyarakat.</li>
+              <li>Pertentangan (konflik) dalam masyarakat.</li>
+              <li>Terjadinya pemberontakan atau revolusi.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Faktor Eksternal (Dari Luar)</h3>
+            <ul class="materi-list">
+              <li>Perubahan lingkungan alam fisik (bencana alam).</li>
+              <li>Peperangan dengan negara lain.</li>
+              <li>Pengaruh kebudayaan masyarakat lain melalui:
+                <br>- <strong>Difusi:</strong> Penyebaran unsur budaya.
+                <br>- <strong>Akulturasi:</strong> Percampuran dua budaya tanpa menghilangkan budaya asli.
+                <br>- <strong>Asimilasi:</strong> Peleburan dua budaya menjadi budaya baru.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>4. Dampak Perubahan Sosial</h2>
+        <div class="grid-2">
+          <div class="info-box" style="background: #dcfce7; border-color: #16a34a;">
+            <strong style="color: #15803d;">Dampak Positif</strong>
+            Munculnya nilai dan norma baru yang lebih relevan, berkembangnya ilmu pengetahuan dan teknologi (IPTEK), serta meningkatnya efektivitas dan efisiensi kerja.
+          </div>
+          <div class="info-box" style="background: #fee2e2; border-color: #dc2626;">
+            <strong style="color: #b91c1c;">Dampak Negatif</strong>
+            Terjadinya <strong>Cultural Shock</strong> (gegar budaya), <strong>Cultural Lag</strong> (ketertinggalan budaya), disorganisasi sosial, hingga meningkatnya perilaku konsumtif.
+          </div>
+        </div>
+        <div style="margin-top: 1.25rem; text-align: right;">
+          <button class="btn" onclick="switchTab('kuis', document.querySelectorAll('.tab-btn')[1])">Mulai Kerjakan Kuis →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BAGIAN 2: KUIS INTERAKTIF -->
+    <section id="section-kuis" class="section">
+      <!-- Layar Awal Kuis -->
+      <div id="quiz-start-screen" class="card quiz-start">
+        <h2>Uji Pemahaman: Perubahan Sosial</h2>
+        <p style="color: var(--text-muted); max-width: 520px; margin: 0.5rem auto 0;">
+          Terdiri dari <strong>10 soal pilihan ganda</strong>. Setiap jawaban benar bernilai <strong>10 poin</strong>. Pembahasan akan langsung muncul setelah kamu memilih jawaban.
+        </p>
+
+        <div class="input-group">
+          <label for="student-name">Nama Lengkap Siswa</label>
+          <input type="text" id="student-name" placeholder="Masukkan nama kamu..." autocomplete="off" />
+          <div id="name-error" class="error-msg">Silakan masukkan nama kamu terlebih dahulu.</div>
+        </div>
+
+        <button class="btn" onclick="startQuiz()">Mulai Kuis Sekarang</button>
+      </div>
+
+      <!-- Layar Pengerjaan Soal -->
+      <div id="quiz-active-screen" class="card" style="display: none;">
+        <div class="quiz-header">
+          <span id="question-counter">Soal 1 dari 10</span>
+          <span class="pill" id="question-topic">Konsep Dasar</span>
+          <span>Skor: <strong id="current-score">0</strong></span>
+        </div>
+
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+
+        <div class="question-text" id="question-text">Memuat pertanyaan...</div>
+
+        <div class="options-list" id="options-container"></div>
+
+        <div class="feedback-box" id="feedback-box"></div>
+
+        <div class="quiz-footer">
+          <button class="btn" id="next-btn" style="display: none;" onclick="nextQuestion()">Soal Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Layar Hasil Akhir -->
+      <div id="quiz-result-screen" class="card" style="display: none;">
+        <div class="result-header">
+          <span class="pill" id="result-predicate">Sangat Baik</span>
+          <h2 style="justify-content: center; margin-top: 0.75rem;">Hasil Evaluasi Belajar</h2>
+          <p id="result-student-name" style="font-weight: 600; color: var(--text-muted);"></p>
+
+          <div class="score-circle">
+            <span id="final-score">100</span>
+            <small>SKOR AKHIR</small>
+          </div>
+
+          <div class="stats-row">
+            <span class="stat-correct">✔ Benar: <span id="total-correct">0</span></span>
+            <span class="stat-wrong">✖ Salah: <span id="total-wrong">0</span></span>
+          </div>
+
+          <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn" onclick="restartQuiz()">🔄 Ulangi Kuis</button>
+            <button class="btn btn-outline" onclick="switchTab('materi', document.querySelectorAll('.tab-btn')[0])">📚 Pelajari Materi Lagi</button>
+          </div>
+        </div>
+
+        <h3 style="margin-bottom: 1rem;">Review Pembahasan Jawaban</h3>
+        <div id="review-container"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Media Pembelajaran Interaktif IPS • Materi Perubahan Sosial Budaya
+  </footer>
+
+  <script>
+    // Bank Soal IPS: Perubahan Sosial
+    const questionBank = [
+      {
+        topic: "Pengertian & Tokoh",
+        question: "Tokoh sosiologi yang mendefinisikan perubahan sosial sebagai perubahan pada lembaga-lembaga kemasyarakatan yang memengaruhi sistem sosialnya, termasuk nilai, sikap, dan pola perilaku adalah...",
+        options: [
+          "Kingsley Davis",
+          "Selo Soemardjan",
+          "Max Weber",
+          "Soerjono Soekanto"
+        ],
+        answer: 1,
+        explanation: "Selo Soemardjan menekankan bahwa perubahan sosial terjadi pada lembaga kemasyarakatan yang memengaruhi sistem sosial, nilai, sikap, dan pola perilaku masyarakat."
+      },
+      {
+        topic: "Bentuk Perubahan",
+        question: "Perubahan model pakaian, gaya rambut, dan tren musik yang digemari remaja termasuk ke dalam bentuk perubahan sosial...",
+        options: [
+          "Perubahan yang berpengaruh besar",
+          "Perubahan revolusi",
+          "Perubahan yang berpengaruh kecil",
+          "Perubahan yang direncanakan"
+        ],
+        answer: 2,
+        explanation: "Tren pakaian atau gaya rambut hanya diikuti oleh sebagian golongan tertentu dan tidak mengubah struktur kelembagaan masyarakat secara mendasar sehingga pengaruhnya kecil."
+      },
+      {
+        topic: "Bentuk Perubahan",
+        question: "Revolusi Industri di Inggris yang mengubah sistem produksi dari tenaga manusia menjadi tenaga mesin secara cepat menyangkut sendi-sendi pokok kehidupan masyarakat. Berdasarkan waktunya, peristiwa ini tergolong...",
+        options: [
+          "Evolusi",
+          "Revolusi",
+          "Difusi",
+          "Asimilasi"
+        ],
+        answer: 1,
+        explanation: "Revolusi adalah perubahan sosial budaya yang berlangsung secara cepat dan menyangkut dasar atau sendi-sendi pokok kehidupan masyarakat."
+      },
+      {
+        topic: "Faktor Internal",
+        question: "Penemuan baru yang masih berupa ide, alat, atau gagasan awal dan belum diterapkan secara luas oleh masyarakat disebut...",
+        options: [
+          "Invention",
+          "Innovation",
+          "Discovery",
+          "Difusi"
+        ],
+        answer: 2,
+        explanation: "Discovery adalah penemuan unsur kebudayaan baru (baik alat maupun gagasan). Jika sudah diakui, diterima, dan diterapkan masyarakat, barulah menjadi invention."
+      },
+      {
+        topic: "Faktor Eksternal",
+        question: "Masuknya budaya Hindu-Buddha ke Indonesia yang berpadu dengan budaya lokal sehingga menghasilkan bentuk candi bercorak khas Nusantara tanpa menghilangkan unsur budaya asli disebut...",
+        options: [
+          "Asimilasi",
+          "Akulturasi",
+          "Akomodasi",
+          "Kooperasi"
+        ],
+        answer: 1,
+        explanation: "Akulturasi terjadi ketika dua kebudayaan bertemu dan berpadu menghasilkan budaya baru tanpa menghilangkan kepribadian atau ciri khas budaya aslinya."
+      },
+      {
+        topic: "Faktor Penghambat",
+        question: "Berikut ini yang merupakan faktor penghambat terjadinya perubahan sosial dalam masyarakat adalah...",
+        options: [
+          "Kontak dengan kebudayaan lain",
+          "Sistem pendidikan formal yang maju",
+          "Sikap masyarakat yang sangat tradisional dan tertutup",
+          "Penduduk yang heterogen"
+        ],
+        answer: 2,
+        explanation: "Sikap masyarakat yang mengagungkan tradisi masa lalu secara berlebihan dan tertutup terhadap hal baru akan menghambat laju perubahan sosial."
+      },
+      {
+        topic: "Dampak Perubahan",
+        question: "Ketidaksesuaian dalam perkembangan unsur-unsur kebudayaan, misalnya teknologi transportasi berkembang sangat pesat tetapi budaya disiplin berlalu lintas masyarakat masih rendah, dikenal dengan istilah...",
+        options: [
+          "Cultural Shock",
+          "Cultural Lag",
+          "Anomie",
+          "Westernisasi"
+        ],
+        answer: 1,
+        explanation: "Cultural Lag (ketertinggalan budaya) terjadi apabila salah satu komponen budaya (biasanya budaya material/teknologi) tumbuh lebih cepat daripada budaya non-material (nilai/norma)."
+      },
+      {
+        topic: "Dampak Perubahan",
+        question: "Seseorang yang pindah dari daerah pedesaan terpencil ke kota metropolitan mengalami kebingungan, kecemasan, dan kesulitan menyesuaikan diri dengan ritme kehidupan kota. Kondisi ini disebut...",
+        options: [
+          "Cultural Shock",
+          "Cultural Lag",
+          "Social Mobility",
+          "Modernisasi"
+        ],
+        answer: 0,
+        explanation: "Cultural Shock (gegar budaya) adalah kondisi terguncangnya jiwa atau mental seseorang akibat belum siap menerima unsur-unsur kebudayaan asing/baru yang berbeda jauh."
+      },
+      {
+        topic: "Modernisasi & Westernisasi",
+        question: "Perbedaan mendasar antara modernisasi dan westernisasi terletak pada...",
+        options: [
+          "Modernisasi menolak ilmu pengetahuan, sedangkan westernisasi menerimanya",
+          "Modernisasi berorientasi pada kemajuan dan efisiensi berbasis IPTEK tanpa meninggalkan jati diri bangsa, sedangkan westernisasi meniru gaya hidup Barat secara mutlak",
+          "Westernisasi selalu berdampak positif bagi budaya lokal",
+          "Modernisasi hanya terjadi di bidang kesenian dan hiburan"
+        ],
+        answer: 1,
+        explanation: "Modernisasi adalah proses menuju masa kini yang rasional dan berbasis IPTEK dengan tetap mempertahankan kepribadian bangsa, sedangkan westernisasi meniru budaya Barat tanpa seleksi."
+      },
+      {
+        topic: "Agen Perubahan",
+        question: "Pihak-pihak yang mempelopori, merencanakan, dan mengarahkan masyarakat untuk melakukan perubahan sosial yang terencana disebut...",
+        options: [
+          "Social Control",
+          "Agent of Change",
+          "Social Climbing",
+          "Conformity"
+        ],
+        answer: 1,
+        explanation: "Agent of Change (agen perubahan) adalah seseorang atau sekelompok orang yang mendapat kepercayaan masyarakat sebagai pemimpin dalam mengubah sistem sosial."
+      }
+    ];
+
+    let shuffledQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let studentName = "";
+    let userAnswers = [];
+
+    // Fungsi Navigasi Tab
+    function switchTab(tabName, btnElement) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(`section-${tabName}`).classList.add('active');
+    }
+
+    // Acak Urutan Soal (Fisher-Yates Shuffle)
+    function shuffleArray(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // Mulai Kuis
+    function startQuiz() {
+      const nameInput = document.getElementById('student-name');
+      const errorMsg = document.getElementById('name-error');
+
+      if (!nameInput.value.trim()) {
+        errorMsg.style.display = 'block';
+        nameInput.focus();
+        return;
+      }
+
+      errorMsg.style.display = 'none';
+      studentName = nameInput.value.trim();
+      shuffledQuestions = shuffleArray(questionBank);
+      currentQuestionIndex = 0;
+      score = 0;
+      userAnswers = [];
+
+      document.getElementById('quiz-start-screen').style.display = 'none';
+      document.getElementById('quiz-result-screen').style.display = 'none';
+      document.getElementById('quiz-active-screen').style.display = 'block';
+
+      renderQuestion();
+    }
+
+    // Tampilkan Soal
+    function renderQuestion() {
+      const q = shuffledQuestions[currentQuestionIndex];
+      const total = shuffledQuestions.length;
+
+      document.getElementById('question-counter').textContent = `Soal ${currentQuestionIndex + 1} dari ${total}`;
+      document.getElementById('question-topic').textContent = q.topic;
+      document.getElementById('current-score').textContent = score;
+      document.getElementById('progress-bar').style.width = `${((currentQuestionIndex) / total) * 100}%`;
+      document.getElementById('question-text').textContent = `${currentQuestionIndex + 1}. ${q.question}`;
+
+      const feedbackBox = document.getElementById('feedback-box');
+      feedbackBox.className = 'feedback-box';
+      feedbackBox.innerHTML = '';
+
+      const nextBtn = document.getElementById('next-btn');
+      nextBtn.style.display = 'none';
+      nextBtn.textContent = currentQuestionIndex === total - 1 ? 'Lihat Hasil Akhir ✓' : 'Soal Berikutnya →';
+
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      q.options.forEach((optText, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `
+          <span class="option-letter">${letters[index]}</span>
+          <span>${optText}</span>
+        `;
+        btn.onclick = () => selectAnswer(index, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    // Pilih Jawaban
+    function selectAnswer(selectedIndex, selectedBtn) {
+      const q = shuffledQuestions[currentQuestionIndex];
+      const allButtons = document.querySelectorAll('.option-btn');
+      const feedbackBox = document.getElementById('feedback-box');
+
+      // Nonaktifkan semua tombol setelah menjawab
+      allButtons.forEach(btn => btn.disabled = true);
+
+      const isCorrect = selectedIndex === q.answer;
+      if (isCorrect) {
+        score += 10;
+        selectedBtn.classList.add('correct');
+        feedbackBox.className = 'feedback-box correct';
+        feedbackBox.innerHTML = `<strong>✔ Jawaban Benar!</strong><br>${q.explanation}`;
+      } else {
+        selectedBtn.classList.add('wrong');
+        allButtons[q.answer].classList.add('correct');
+        feedbackBox.className = 'feedback-box wrong';
+        feedbackBox.innerHTML = `<strong>✖ Jawaban Kurang Tepat.</strong><br>${q.explanation}`;
+      }
+
+      userAnswers.push({
+        question: q.question,
+        selectedOption: q.options[selectedIndex],
+        correctOption: q.options[q.answer],
+        isCorrect: isCorrect,
+        explanation: q.explanation
+      });
+
+      document.getElementById('current-score').textContent = score;
+      document.getElementById('progress-bar').style.width = `${((currentQuestionIndex + 1) / shuffledQuestions.length) * 100}%`;
+      document.getElementById('next-btn').style.display = 'inline-block';
+    }
+
+    // Soal Berikutnya
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < shuffledQuestions.length) {
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    // Tampilkan Hasil Akhir
+    function showResults() {
+      document.getElementById('quiz-active-screen').style.display = 'none';
+      document.getElementById('quiz-result-screen').style.display = 'block';
+
+      const correctCount = userAnswers.filter(item => item.isCorrect).length;
+      const wrongCount = shuffledQuestions.length - correctCount;
+
+      document.getElementById('result-student-name').textContent = `Peserta: ${studentName}`;
+      document.getElementById('final-score').textContent = score;
+      document.getElementById('total-correct').textContent = correctCount;
+      document.getElementById('total-wrong').textContent = wrongCount;
+
+      const predicateEl = document.getElementById('result-predicate');
+      if (score >= 90) {
+        predicateEl.textContent = "🏆 Sangat Memuaskan (A)";
+        predicateEl.style.background = "#dcfce7";
+        predicateEl.style.color = "#15803d";
+      } else if (score >= 70) {
+        predicateEl.textContent = "👍 Baik / Lulus KKM (B)";
+        predicateEl.style.background = "#eff6ff";
+        predicateEl.style.color = "#1d4ed8";
+      } else {
+        predicateEl.textContent = "📖 Perlu Belajar Lagi (C)";
+        predicateEl.style.background = "#fef3c7";
+        predicateEl.style.color = "#b45309";
+      }
+
+      const reviewContainer = document.getElementById('review-container');
+      reviewContainer.innerHTML = '';
+
+      userAnswers.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'review-item';
+        div.innerHTML = `
+          <h4>${idx + 1}. ${item.question}</h4>
+          <p style="color: ${item.isCorrect ? 'var(--success)' : 'var(--danger)'}; font-weight: 600;">
+            Jawaban Kamu: ${item.selectedOption} ${item.isCorrect ? '(Benar)' : '(Salah)'}
+          </p>
+          ${!item.isCorrect ? `<p style="color: var(--success); font-weight: 600;">Kunci Jawaban: ${item.correctOption}</p>` : ''}
+          <p style="color: var(--text-muted); margin-top: 0.35rem;"><em>Pembahasan:</em> ${item.explanation}</p>
+        `;
+        reviewContainer.appendChild(div);
+      });
+    }
+
+    // Ulangi Kuis
+    function restartQuiz() {
+      shuffledQuestions = shuffleArray(questionBank);
+      currentQuestionIndex = 0;
+      score = 0;
+      userAnswers = [];
+
+      document.getElementById('quiz-result-screen').style.display = 'none';
+      document.getElementById('quiz-active-screen').style.display = 'block';
+      renderQuestion();
+    }
+  </script>
+</body>
+</html>
